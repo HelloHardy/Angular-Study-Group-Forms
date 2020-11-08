@@ -1,0 +1,45 @@
+<h3>Hero Registration Form</h3>
+
+<hr>
+
+<div class="col-md-6">
+    <form #form="ngForm">
+        <div class="form-group">
+            <label for="realName">Real Name : </label>
+            <input id="realName" name="realName" class="form-control" type="text" ngModel #realName="ngModel" required
+                minlength="3">
+
+            <div class="alert alert-warning" *ngIf="realName.touched && realName.invalid">
+                <div *ngIf="realName.errors.required">Real Name is required</div>
+                <div *ngIf="realName.errors.minlength">Real Name minimum length is
+                    {{realName.errors.minlength.requiredLength}}</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="heroName">Hero Name : </label>
+            <input id="heroName" name="heroName" type="text" class="form-control" ngModel #heroName="ngModel" required>
+
+            <div class="alert alert-warning" *ngIf="heroName.touched && heroName.invalid">
+                <div *ngIf="heroName.errors.required">Hero Name is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="superPower">Super Power : </label>
+            <div class="form-check">
+                <input id="psychic" name="psychic" type="checkbox" class="form-check-input" ngModel #psychic="ngModel">
+                <label for="abilityFly">Psychic</label>
+                <br>
+                <input id="teleport" name="teleport" type="checkbox" class="form-check-input" ngModel
+                    #teleport="ngModel">
+                <label for="teleport">Teleport</label>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-primary" [disabled]="form.invalid"
+                (click)="submitRegistration(form.value)">Submit</button>
+        </div>
+    </form>
+</div>
