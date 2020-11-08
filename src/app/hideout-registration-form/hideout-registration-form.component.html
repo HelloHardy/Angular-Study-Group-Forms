@@ -52,7 +52,7 @@
                     <div *ngIf="form.controls.heroes.controls[i].errors.required">Hero name is required</div>
                 </div>
             </div>
-            <div class="alert alert-warning" *ngIf="!form.controls.heroes.value">
+            <div class="alert alert-warning" *ngIf="!form.controls.heroes.value.length">
                 Please add at least one hero
             </div>
         </div>
