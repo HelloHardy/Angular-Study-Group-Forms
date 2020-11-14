@@ -12,67 +12,53 @@ export class HideoutRegistrationFormComponent implements OnInit {
 
   form: FormGroup;
 
-  heroes: FormArray;
-
-  city: FormControl;
-  state: FormControl;
-  street: FormControl;
-  isHidden: FormControl;
-  hideoutName: FormControl;
-
   cities: any;
 
   constructor(private cityService: CityService, private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-      city: ['', Validators.required],
-      heroes: this.formBuilder.array([]),
-      street: ['', Validators.required],
-      isHidden: ['', Validators.required],
-      hideoutName: [
-        '',
-        [Validators.required, Validators.minLength(3), HideOutValidators.cannotContainSpace],
-        HideOutValidators.isHideoutNameTaken
-      ]
-    });
   }
 
   ngOnInit(): void {
     this.cities = this.cityService.cities;
 
-    // this.heroes = new FormArray([]);
-
-    // this.city = new FormControl('', Validators.required);
-    // this.street = new FormControl('', Validators.required);
-    // this.isHidden = new FormControl('', Validators.required);
-    // this.hideoutName = new FormControl(
-    //   '',
-    //   [Validators.required, Validators.minLength(3), HideOutValidators.cannotContainSpace],
-    //   HideOutValidators.isHideoutNameTaken
-    // );
-
     // this.form = new FormGroup({
-    //   hero: this.heroes,
-    //   city: this.city,
-    //   street: this.street,
-    //   isHidden: this.isHidden,
-    //   hideoutName: this.hideoutName
+    //   heroes: new FormArray([]),
+    //   city: new FormControl('', Validators.required),
+    //   street: new FormControl('', Validators.required),
+    //   isHidden: new FormControl(false, Validators.required),
+    //   hideoutName: new FormControl(
+    //     '',
+    //     [Validators.required, Validators.minLength(3), HideOutValidators.cannotContainSpace],
+    //     HideOutValidators.isHideoutNameTaken
+    //   )
     // });
+
+    this.form = this.formBuilder.group({
+      city: ['', Validators.required],
+      heroes: this.formBuilder.array([]),
+      isHidden: [false, Validators.required],
+      hideoutName: [
+        '',
+        [Validators.required, HideOutValidators.cannotContainSpace],
+        HideOutValidators.isHideoutNameTaken
+      ]
+    });
   }
 
-  getHeroes(): FormArray {
-    return this.form.controls.heroes as FormArray;
+  get heroes(): FormArray {
+    return this.form.get('heroes') as FormArray;
   }
 
   addHero(): void {
-    // this.heroes.push(new FormControl('', Validators.required));
 
-    const heroesControl = this.getHeroes();
+    const heroesControl = this.form.controls.heroes as FormArray;
 
-    heroesControl.push(this.formBuilder.control('', Validators.required));
+    heroesControl.push(new FormControl('', Validators.required));
+
+    // heroesControl.push(this.formBuilder.control('', Validators.required));
   }
 
-  removeHero(index): void {
-    const heroesControl = this.getHeroes();
+  removeHero(index: number): void {
+    const heroesControl = this.form.controls.heroes as FormArray;
 
     heroesControl.removeAt(index);
   }

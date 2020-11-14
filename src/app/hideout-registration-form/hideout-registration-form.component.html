@@ -1,11 +1,9 @@
 <h3>Hideout Registration Form</h3>
-
 <hr>
-
 <div class="col-md-6">
     <form [formGroup]="form">
         <div class="form-group">
-            <label for="hideoutName">Hideout Name : </label>
+            <label>Hideout Name : </label>
             <input id="hideoutName" type="text" class="form-control" formControlName="hideoutName">
 
             <em *ngIf="form.controls.hideoutName.pending">Validating Hideout Name</em>
@@ -15,22 +13,11 @@
                 <div *ngIf="form.controls.hideoutName.errors.isHideoutNameTaken">Hideout Name is taken</div>
                 <div *ngIf="form.controls.hideoutName.errors.required">Hideout Name is required</div>
                 <div *ngIf="form.controls.hideoutName.errors.cannotContainSpace">Hideout Name cannot contain space</div>
-                <div *ngIf="form.controls.hideoutName.errors.minlength">Hideout Name minimum is
-                    {{form.controls.hideoutName.errors.minlength.requiredLength}}</div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="street">Street : </label>
-            <input id="street" type="text" class="form-control" formControlName="street">
-
-            <div class="alert alert-warning" *ngIf="form.controls.street.touched && form.controls.street.errors">
-                <div *ngIf="form.controls.street.errors.required">Street is required</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="city">City : </label>
+            <label>City : </label>
             <select id="street" class="form-control" formControlName="city">
                 <option *ngFor="let c of cities" [value]="c.id">{{c.name}}</option>
             </select>
@@ -43,7 +30,7 @@
         <div class="form-group">
             <label>Hero : </label>
             <button class="btn btn-link" (click)="addHero()" [disabled]="form.controls.heroes.status !== 'VALID'">+</button>
-            <div *ngFor="let control of getHeroes().controls; index as i">
+            <div *ngFor="let control of heroes.controls; index as i">
                 <div class="input-group">
                     <input class="form-control" [formControl]="form.controls.heroes.controls[i]" />
                     <button class="btn btn-link" (click)="removeHero(i)">-</button>
@@ -62,18 +49,14 @@
 
             <div class="row">
                 <label class="col-sm-3">
-                    <input type="radio" name="isHidden" value="true" formControlName="isHidden">
+                    <input type="radio" name="isHidden" [value]="true" formControlName="isHidden">
                     Yes
                 </label>
 
                 <label class="col-sm-3">
-                    <input type="radio" name="isHidden" value="false" formControlName="isHidden">
+                    <input type="radio" name="isHidden" [value]="false" formControlName="isHidden">
                     No
                 </label>
-            </div>
-
-            <div class="alert alert-warning" *ngIf="form.controls.isHidden.touched && form.controls.isHidden.errors">
-                <div *ngIf="form.controls.isHidden.errors.required">Is Hidden is required</div>
             </div>
         </div>
 
